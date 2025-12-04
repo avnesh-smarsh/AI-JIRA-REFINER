@@ -1,0 +1,73 @@
+{
+  "name": "jira-refiner",
+  "displayName": "Jira Refinement Agent",
+  "description": "Refine Jira tickets using MCP and AI",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "*",
+    "onView:jiraRefinerView"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jira-refiner-container",
+          "title": "Jira Refiner",
+          "icon": "$(telescope)"
+        }
+      ]
+    },
+    "views": {
+      "jira-refiner-container": [
+        {
+          "id": "jiraRefinerView",
+          "name": "Ticket Refinement"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Jira Refiner",
+      "properties": {
+        "jiraRefiner.mcpServers": {
+          "type": "object",
+          "default": {
+            "mock": {
+              "command": "node",
+              "args": [
+                "./out/mockServer.js"
+              ]
+            }
+          },
+          "description": "Configuration for MCP Servers (key: name, value: {command, args})"
+        },
+        "jiraRefiner.llmApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API Key for OpenAI/Anthropic (Simulated in this demo)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "zod": "^3.23.0"
+  }
+}
